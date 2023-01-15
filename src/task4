@@ -1,0 +1,33 @@
+select * from customers;
+select * from orders;
+select * from order_item;
+select * from products;
+select * from suppliers;
+
+select * from customers where country = 'Canada';
+select distinct country from customers;
+select count(quantity) from order_item;
+select max(unit_price) from order_item;
+select sum(total_amount) from orders;
+select sum(total_amount) from order_item  join orders o on o.id = order_item.order_id
+where order_date between '2014-1-1' and '2014-12-31';
+select avg(unit_price) from order_item;
+select first_name, round(avg(unit_price)) from customers join orders o on customers.id = o.customer_id
+join order_item oi on o.id = oi.order_id group by first_name;
+select * from customers where country = 'Brazil' or country = 'Spain' order by country;
+select * from orders join order_item oi on orders.id = oi.order_id where order_date
+between '2013-1-1' and '2014-12-31' and unit_price < 100.00;
+select * from customers where country in('Spain','Italy','Germany','France') order by country;
+select distinct customers.country from customers join orders on customers.id = orders.customer_id
+join order_item on customers.id = order_item.order_id join products on customers.id = products.supplier_id
+join suppliers on customers.country = suppliers.country;
+select * from customers where first_name like 'Jo%';
+select * from customers where length(first_name) = 4 and first_name like '%a';
+select country, count(first_name) from customers group by country;
+select country, count(first_name) from customers group by country order by count(first_name) desc;
+select sum(quantity) as quantity, sum(total_amount) as total_sum, customer_id from order_item join orders o on o.id = order_item.order_id
+group by customer_id order by total_sum;
+select sum(quantity) as quantity, sum(total_amount) as total_sum, customer_id from order_item
+join orders o on o.id = order_item.order_id where quantity>20
+group by customer_id order by total_sum;
+select country, count(city) as city from customers group by country order by city desc;
